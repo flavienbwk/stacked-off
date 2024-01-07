@@ -9,65 +9,7 @@ StackedOff uses the 'stack dump' data files made public by the Stack Exchange Ne
 
 # Installation (Docker)
 
-## Build and run (dev / test)
-
-Let's build and run the service :
-
-```bash
-docker-compose up -d --build
-```
-
-Go on `localhost:8080`
-
-Place your StackExchange archive files in the `./import` directory and once on the web interface, enter `/import` as _Index directory_.
-
-> Don't forget downloading the [Sites.xml](https://archive.org/download/stackexchange/Sites.xml) file. Add it in `./import`.
-
-## Build and run (production)
-
-Production adds basic_auth on `/admin` (add index) and `/rest/purgeSite` (remove index) endpoints
-
-Create a user and password with :
-
-```bash
-touch ./nginx/.htpasswd
-htpasswd -m ./nginx/.htpasswd admin
-# A password will be asked for the "admin" user
-# You can add multiple accounts
-```
-
-> This may require an `apt-get install apache2-utils`
-
-Let's build and run the service :
-
-```bash
-docker-compose -f prod.docker-compose.yml up -d --build
-```
-
-Go on `localhost:8080`
-
-Place your StackExchange archive files in the `./import` directory and once on the web interface, enter `/import` as _Index directory_.
-
-> Don't forget downloading the [Sites.xml](https://archive.org/download/stackexchange/Sites.xml) file. Add it in `./import`.
->
-> Example :
-> 
-> ```
-> wget https://ia600107.us.archive.org/27/items/stackexchange/Sites.xml
-> wget https://ia600107.us.archive.org/27/items/stackexchange/Stackoverflow.com-Posts.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Badges.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Comments.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-PostHistory.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-PostLinks.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Tags.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Users.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Votes.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/french.stackexchange.com.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/crypto.stackexchange.com.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/unix.stackexchange.com.7z
-> ```
-
-# Installation (classic)
+# Installation
 
 ## Pre-requisite
 
@@ -77,17 +19,23 @@ Place your StackExchange archive files in the `./import` directory and once on t
 
 ## Aquiring StackExchange Data Dumps
 
-1. Get the 'BitTorrent Infohash' from <a href="https://meta.stackexchange.com/questions/224873/all-stack-exchange-data-dumps">here</a>.
+### Simple download
+
+The latest StackExchange data dumps can be downloaded <a href="https://ia600107.us.archive.org/27/items/stackexchange/">here</a>. Older dumps can be torrented (see next section).
+
+**Important**: You must include in your download the Sites.xml file that is present in every data dump.
+
+**Important**: Once downloaded, do NOT unzip the 7z site files.  StackedOff can only read from the archived site files.
+
+### Torrenting
+
+1. Get the 'BitTorrent Infohash' from <a href="https://meta.stackexchange.com/questions/224873/all-stack-exchange-data-dumps/224922#224922">here</a>.
 2. Use your preferred BitTorrent (e.g. uTorrent) client to download a, or part of a Data Dump.
 
 Note: Most BitTorrent clients allow you to pick and choose which files _within_ a Torrent that you
 wish to download.  You will probably want to limit the files that you download, as some of them can be 
 quite large.  Most of the sites are in individual 7z files.  Except for stackoverflow.com which is broken
 up into a few seperate archives.  If downloading stackoverflow.com, ensure you download the Posts, Users, and Comments files.
-
-**Important**: You must include in your download the Sites.xml file that is present in every data dump.
-
-**Important**: Once downloaded, do NOT unzip the 7z site files.  StackedOff can only read from the archived site files.
 
 ## Running StackedOff
 
@@ -130,6 +78,39 @@ To change this, edit the file in your home directory .stackedoff/app.properties,
 `port=8080`
 
 Re-run StackedOff.
+
+## Building
+
+StackedOff can be built with JDK 8-21. To build it, run `./gradlew build` on MacOS or Linux or `gradlew.bat build` on Windows. After the build is done, it will be available in `./build/distributions/`.
+
+## Testing
+
+StackedOff can also be built and ran via Docker. This is preferrable for testing since it's all one step, but does not produce easily distributable files.
+
+```bash
+docker-compose up -d --build
+```
+
+Go on `localhost:8080`
+
+Place your StackExchange archive files in the `import` directory and once on the web interface, enter `/import` as _Index directory_.
+
+> Don't forget downloading the [Sites.xml](https://archive.org/download/stackexchange/Sites.xml) file. Add it in `./import`.
+
+## Serving
+
+Docker can also be used to make your computer into a kind of local StackExchange server. The "production" build adds basic_auth on `/admin` (add index) and `/rest/purgeSite` (remove index) endpoints, so that accounts can be added.
+
+Create a user and password with :
+
+```bash
+touch ./nginx/.htpasswd
+htpasswd -m ./nginx/.htpasswd admin
+# A password will be asked for the "admin" user
+# You can add multiple accounts
+```
+
+> This may require an `apt-get install apache2-utils`
 
 # Acknowledgments
 
