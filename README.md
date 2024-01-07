@@ -7,8 +7,6 @@ StackedOff uses the 'stack dump' data files made public by the Stack Exchange Ne
 
 <img src="https://github.com/tools4j/stacked-off/blob/master/resources/screenshot-search.png">
 
-# Installation (Docker)
-
 # Installation
 
 ## Pre-requisite
@@ -83,7 +81,7 @@ Re-run StackedOff.
 
 StackedOff can be built with JDK 8-21. To build it, run `./gradlew build` on MacOS or Linux or `gradlew.bat build` on Windows. After the build is done, it will be available in `./build/distributions/`.
 
-## Testing
+## Testing (Docker)
 
 StackedOff can also be built and ran via Docker. This is preferrable for testing since it's all one step, but does not produce easily distributable files.
 
@@ -97,7 +95,7 @@ Place your StackExchange archive files in the `import` directory and once on the
 
 > Don't forget downloading the [Sites.xml](https://archive.org/download/stackexchange/Sites.xml) file. Add it in `./import`.
 
-## Serving
+## Serving (Docker)
 
 Docker can also be used to make your computer into a kind of local StackExchange server. The "production" build adds basic_auth on `/admin` (add index) and `/rest/purgeSite` (remove index) endpoints, so that accounts can be added.
 
