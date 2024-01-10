@@ -27,6 +27,8 @@ import org.tools4j.stacked.index.*
 import java.io.File
 import java.text.DateFormat
 import java.util.concurrent.atomic.AtomicReference
+import java.lang.System
+import javax.swing.JFileChooser
 
 
 class Server {
@@ -76,7 +78,7 @@ class Server {
                 intercept(ApplicationCallPipeline.Setup) {
                     if (instance.diContext.getIndexParentDir() == null
                         && !call.request.path().startsWith("/admin")
-                        && !call.request.path().startsWith("/rest/admin")
+                        && !call.request.path().startsWith("/rest")
                         && !call.request.path().contains("static")
                         && !call.request.path().contains("favicon.ico")
                     ) {
@@ -201,13 +203,26 @@ class Server {
                     call.respond(IndexStats(instance.indexes))
                 }
 
-
                 get("/rest/purgeSite/{id}") {
                     instance.indexes.questionIndex.purgeSite(call.parameters["id"]!!)
                     instance.indexes.indexedSiteIndex.purgeSite(call.parameters["id"]!!)
                     val sites = instance.indexes.indexedSiteIndex.getAll()
                     call.respond(sites)
                 }
+
+                get("/rest/directoryPicker") {
+                    val home = System.getProperty("user.home")
+                    val downloads = File(home, "Downloads")
+
+                    val chooser = JFileChooser(downloads)
+                    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
+
+                    val returnVal = chooser.showOpenDialog(null)
+                    if (returnVal == JFileChooser.APPROVE_OPTION) call.respond(chooser.getSelectedFile().getAbsolutePath())
+                    else call.respond("")
+                }
+
+
                 resource("/", "webapp/index.html")
                 resource("/*", "webapp/index.html")
                 resource("/*/*", "webapp/index.html")
