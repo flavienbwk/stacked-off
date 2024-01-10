@@ -211,10 +211,7 @@ class Server {
                 }
 
                 get("/rest/directoryPicker") {
-                    val home = System.getProperty("user.home")
-                    val downloads = File(home, "Downloads")
-
-                    val chooser = JFileChooser(downloads)
+                    val chooser = JFileChooser()
                     chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
 
                     val returnVal = chooser.showOpenDialog(null)
