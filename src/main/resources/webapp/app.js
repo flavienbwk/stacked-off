@@ -123,13 +123,20 @@ function showAdmin(parentIndexDir, message){
                 be on disk, but you won't see them in StackedOff.  To see them again, set the directory back to where
                 it was pointing to previously.</p>
                 <br/>
-                <p><i>(This cannot be a file chooser due to browser security restrictions.)</i></p>
+                <p><i>(The file picker does not consistently function. If it doesn't show, the best course of action is to close and rerun StackedOff.)</i></p>
                 <br/>
                 <div class="div-load-sites">
                     <input id="index-parent-dir"
                             class="wide-text-input text-input"
                             type="text"
                             value="${parentIndexDir}"/>
+                    <input id="index-parent-dir-picker" type="button" value="Open Picker" onclick="fetch('/rest/directoryPicker').then((response) => {
+                        if (response.ok) {
+                            response.text().then((text) => {
+                                $('#index-parent-dir')[0].value = text;
+                            });
+                        }
+                    });">
                 </div>
                 <br/>
                 <input id="sites-xml-chosen-next-button"

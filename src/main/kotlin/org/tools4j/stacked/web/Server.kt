@@ -51,6 +51,7 @@ class Server {
         }
 
         private fun Application.mainServer() {
+            var chooser = JFileChooser()
             val loadInProgress = AtomicReference<JobStatus>(NullJobStatus())
 
             install(DefaultHeaders) {
@@ -211,12 +212,15 @@ class Server {
                 }
 
                 get("/rest/directoryPicker") {
-                    val chooser = JFileChooser()
+                    if (chooser === null) chooser = JFileChooser();
                     chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
 
+                    chooser.setVisible(true)
                     val returnVal = chooser.showOpenDialog(null)
-                    if (returnVal == JFileChooser.APPROVE_OPTION) call.respond(chooser.getSelectedFile().getAbsolutePath())
-                    else call.respond("")
+                    val selectedFile = chooser.getSelectedFile();
+                    if (selectedFile != null) call.respond(HttpStatusCode.OK, selectedFile.getAbsolutePath())
+                    else call.respond(HttpStatusCode.InternalServerError)
+                    chooser.setVisible(false)
                 }
 
 
