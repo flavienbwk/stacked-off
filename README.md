@@ -19,7 +19,7 @@ StackedOff uses the 'stack dump' data files made public by the Stack Exchange Ne
 
 ### Simple download
 
-The latest StackExchange data dumps can be downloaded <a href="https://ia600107.us.archive.org/27/items/stackexchange/">here</a>. Older dumps can be torrented (see next section).
+The latest StackExchange data dump can be downloaded <a href="https://ia600107.us.archive.org/27/items/stackexchange/">here</a>. Older data can be torrented (see next section).
 
 **Important**: You must include in your download the Sites.xml file that is present in every data dump.
 
@@ -28,7 +28,7 @@ The latest StackExchange data dumps can be downloaded <a href="https://ia600107.
 ### Torrenting
 
 1. Get the 'BitTorrent Infohash' from <a href="https://meta.stackexchange.com/questions/224873/all-stack-exchange-data-dumps/224922#224922">here</a>.
-2. Use your preferred BitTorrent (e.g. uTorrent) client to download a, or part of a Data Dump.
+2. Use your preferred BitTorrent client to download a, or part of a data dump.
 
 Note: Most BitTorrent clients allow you to pick and choose which files _within_ a Torrent that you
 wish to download.  You will probably want to limit the files that you download, as some of them can be 
@@ -51,7 +51,7 @@ will store it's indexes.  These indexes can get quite large if you are indexing 
 
 * Make sure you have enough disk space.  
 * It is preferable to use a local disk, as this will dramatically impact the speed of StackedOff.
-* It is preferable to use an SSD disk, as this will also impact the speed of StackedOff.
+* It is preferable to use an SSD, as this will also impact the speed of StackedOff.
 
 ### Load a site
 
@@ -79,11 +79,11 @@ Re-run StackedOff.
 
 ## Building
 
-StackedOff can be built with JDK 8-21. To build it, run `./gradlew build` on MacOS or Linux or `gradlew.bat build` on Windows. After the build is done, it will be available in `./build/distributions/`.
+StackedOff can be built with JDK 8-21. To build it, run `./gradlew build` on a Unix-like system or `gradlew.bat build` on Windows. After the build is done, it is available in `./build/distributions/`.
 
 ## Testing (Docker)
 
-StackedOff can also be built and ran via Docker. This is preferrable for testing since it's all one step, but does not produce easily distributable files.
+StackedOff can also be built and ran via Docker. This is preferrable for testing since it's all one step, but not for production, as it does not produce distributable files.
 
 ```bash
 docker-compose up -d --build
@@ -92,8 +92,6 @@ docker-compose up -d --build
 Go on `localhost:8080`
 
 Place your StackExchange archive files in the `import` directory and once on the web interface, enter `/import` as _Index directory_.
-
-> Don't forget downloading the [Sites.xml](https://archive.org/download/stackexchange/Sites.xml) file. Add it in `./import`.
 
 ## Serving (Docker)
 
