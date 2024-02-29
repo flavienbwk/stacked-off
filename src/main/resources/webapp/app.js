@@ -119,8 +119,8 @@ function showAdmin(parentIndexDir, message){
     showMessage(message)
     const markup = `<h1>Index Directory</h1>
                 <p>Please select the directory where your indexes are/will be stored.</p>
-                <p>If you already have sites loaded, and you change this directory.  Your indexes will still 
-                be on disk, but you won't see them in StackedOff.  To see them again, set the directory back to where
+                <p>If you already have sites loaded, and you change this directory. Your indexes will still 
+                be on disk, but you won't see them in StackedOff. To see them again, set the directory back to where
                 it was pointing to previously.</p>
                 <br/>
                 <p><i>(The file picker does not consistently function. If it doesn't show, the best course of action is to close and rerun StackedOff.)</i></p>
@@ -428,7 +428,7 @@ function showSites(indexedSites){
     if(indexedSites.length == 0){
         const markup = `
                 <br/>
-                <span>You have no sites loaded.  Click here to load sites from a stackdump download</span>
+                <span>You have no sites loaded. Click here to load sites from a stackdump download</span>
                 <br/><br/>
                 <input type="button" onclick="router.navigate('/load/chooseSitesXmlFile')" value="Load new site(s)"/>
                 `

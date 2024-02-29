@@ -1,6 +1,6 @@
 <img height="64px" src="https://github.com/tools4j/stacked-off/blob/master/src/main/resources/webapp/stacked-off-white.png"/>
 
-StackedOff is a Stack Exchange site indexer and search engine.  It's
+StackedOff is a Stack Exchange site indexer and search engine. It's
 intended use is for people who wish to access Stack Exchange Network site(s), 
 e.g. <a href="https://stackoverflow.com">stackoverflow.com</a>, but do not have a reliable internet service.
 StackedOff uses the 'stack dump' data files made public by the Stack Exchange Network.
@@ -17,13 +17,13 @@ StackedOff uses the 'stack dump' data files made public by the Stack Exchange Ne
 
 ## Aquiring StackExchange Data Dumps
 
+**Important**: You must include in your download the Sites.xml file that is present in every data dump.
+
+**Important**: Once downloaded, do NOT unzip the 7z site files. StackedOff can only read from the archived site files.
+
 ### Simple download
 
 The latest StackExchange data dump can be downloaded <a href="https://ia600107.us.archive.org/27/items/stackexchange/">here</a>. Older data can be torrented (see next section).
-
-**Important**: You must include in your download the Sites.xml file that is present in every data dump.
-
-**Important**: Once downloaded, do NOT unzip the 7z site files.  StackedOff can only read from the archived site files.
 
 ### Torrenting
 
@@ -31,9 +31,9 @@ The latest StackExchange data dump can be downloaded <a href="https://ia600107.u
 2. Use your preferred BitTorrent client to download a, or part of a data dump.
 
 Note: Most BitTorrent clients allow you to pick and choose which files _within_ a Torrent that you
-wish to download.  You will probably want to limit the files that you download, as some of them can be 
-quite large.  Most of the sites are in individual 7z files.  Except for stackoverflow.com which is broken
-up into a few seperate archives.  If downloading stackoverflow.com, ensure you download the Posts, Users, and Comments files.
+wish to download. You will probably want to limit the files that you download, as some of them can be 
+quite large. Most of the sites are in individual 7z files. Except for stackoverflow.com which is broken
+up into a few seperate archives. If downloading stackoverflow.com, ensure you download the Posts, Users, and Comments files.
 
 ## Running StackedOff
 
@@ -42,14 +42,13 @@ up into a few seperate archives.  If downloading stackoverflow.com, ensure you d
 
 Launch a browser pointing at http://localhost and you should see the StackedOff GUI.
 
-(NOTE: Your browser must be ES6 compatible.  Please see the <a href="https://www.w3schools.com/js/js_es6.asp">table here for browser version compatibility</a>.)
+(NOTE: Your browser must be ES6 compatible. Please see the <a href="https://www.w3schools.com/js/js_es6.asp">table here for browser version compatibility</a>.)
 
 ### Configure index dir
 
-The first time that you run StackedOff you will be asked to specify an index directory.  This is where StackedOff
-will store it's indexes.  These indexes can get quite large if you are indexing large sites such as stackoverflow.com.
+The first time that you run StackedOff you will be asked to specify an index directory. This is where StackedOff will store it's indexes. These indexes can get quite large if you are indexing large sites such as stackoverflow.com.
 
-* Make sure you have enough disk space.  
+* Make sure you have enough disk space. 
 * It is preferable to use a local disk, as this will dramatically impact the speed of StackedOff.
 * It is preferable to use an SSD, as this will also impact the speed of StackedOff.
 
@@ -58,11 +57,11 @@ will store it's indexes.  These indexes can get quite large if you are indexing 
 Assuming you have downloaded a Stack Exchange site:
 
 1. click on the 'Add Site' button.
-2. Enter the path that contains the 7z file(s) and Sites.xml file that you previously downloaded.  Click 'Next'
+2. Enter the path that contains the 7z file(s) and Sites.xml file that you previously downloaded. Click 'Next'
 3. Select the site(s) that you wish to index.
 4. Click 'Next'
 
-Indexing can take some time.  On my laptop (7th Gen i5, with SSD) indexing <a href="stackoverflow.com">stackoverflow.com</a> takes about 4 hours.
+Indexing can take some time. On my laptop (7th Gen i5, with SSD) indexing <a href="stackoverflow.com">stackoverflow.com</a> takes about 4 hours.
 
 ### Search
 
@@ -110,7 +109,7 @@ htpasswd -m ./nginx/.htpasswd admin
 
 # Acknowledgments
 
-The guys at <a href="https://stackexchange.com/">stackexchange.com</a>.  Who not only revolutionized the 
+The guys at <a href="https://stackexchange.com/">stackexchange.com</a>. Who not only revolutionized the 
 technical Q&A space, but also in the spirit of 'openness' admirably continue to allow free access to all of their
 Q&A data for all of their sites.
 
