@@ -1,73 +1,13 @@
 <img height="64px" src="https://github.com/tools4j/stacked-off/blob/master/src/main/resources/webapp/stacked-off-white.png"/>
 
-StackedOff is a Stack Exchange site indexer and search engine.  It's
+StackedOff is a Stack Exchange site indexer and search engine. It's
 intended use is for people who wish to access Stack Exchange Network site(s), 
 e.g. <a href="https://stackoverflow.com">stackoverflow.com</a>, but do not have a reliable internet service.
 StackedOff uses the 'stack dump' data files made public by the Stack Exchange Network.
 
 <img src="https://github.com/tools4j/stacked-off/blob/master/resources/screenshot-search.png">
 
-# Installation (Docker)
-
-## Build and run (dev / test)
-
-Let's build and run the service :
-
-```bash
-docker-compose up -d --build
-```
-
-Go on `localhost:8080`
-
-Place your StackExchange archive files in the `./import` directory and once on the web interface, enter `/import` as _Index directory_.
-
-> Don't forget downloading the [Sites.xml](https://archive.org/download/stackexchange/Sites.xml) file. Add it in `./import`.
-
-## Build and run (production)
-
-Production adds basic_auth on `/admin` (add index) and `/rest/purgeSite` (remove index) endpoints
-
-Create a user and password with :
-
-```bash
-touch ./nginx/.htpasswd
-htpasswd -m ./nginx/.htpasswd admin
-# A password will be asked for the "admin" user
-# You can add multiple accounts
-```
-
-> This may require an `apt-get install apache2-utils`
-
-Let's build and run the service :
-
-```bash
-docker-compose -f prod.docker-compose.yml up -d --build
-```
-
-Go on `localhost:8080`
-
-Place your StackExchange archive files in the `./import` directory and once on the web interface, enter `/import` as _Index directory_.
-
-> Don't forget downloading the [Sites.xml](https://archive.org/download/stackexchange/Sites.xml) file. Add it in `./import`.
->
-> Example :
-> 
-> ```
-> wget https://ia600107.us.archive.org/27/items/stackexchange/Sites.xml
-> wget https://ia600107.us.archive.org/27/items/stackexchange/Stackoverflow.com-Posts.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Badges.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Comments.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-PostHistory.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-PostLinks.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Tags.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Users.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/stackoverflow.com-Votes.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/french.stackexchange.com.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/crypto.stackexchange.com.7z
-> wget https://ia600107.us.archive.org/27/items/stackexchange/unix.stackexchange.com.7z
-> ```
-
-# Installation (classic)
+# Installation
 
 ## Pre-requisite
 
@@ -77,17 +17,23 @@ Place your StackExchange archive files in the `./import` directory and once on t
 
 ## Aquiring StackExchange Data Dumps
 
-1. Get the 'BitTorrent Infohash' from <a href="https://meta.stackexchange.com/questions/224873/all-stack-exchange-data-dumps">here</a>.
-2. Use your preferred BitTorrent (e.g. uTorrent) client to download a, or part of a Data Dump.
-
-Note: Most BitTorrent clients allow you to pick and choose which files _within_ a Torrent that you
-wish to download.  You will probably want to limit the files that you download, as some of them can be 
-quite large.  Most of the sites are in individual 7z files.  Except for stackoverflow.com which is broken
-up into a few seperate archives.  If downloading stackoverflow.com, ensure you download the Posts, Users, and Comments files.
-
 **Important**: You must include in your download the Sites.xml file that is present in every data dump.
 
-**Important**: Once downloaded, do NOT unzip the 7z site files.  StackedOff can only read from the archived site files.
+**Important**: Once downloaded, do NOT unzip the 7z site files. StackedOff can only read from the archived site files.
+
+### Simple download
+
+The latest StackExchange data dump can be downloaded <a href="https://ia600107.us.archive.org/27/items/stackexchange/">here</a>. Older data can be torrented (see next section).
+
+### Torrenting
+
+1. Get the 'BitTorrent Infohash' from <a href="https://meta.stackexchange.com/questions/224873/all-stack-exchange-data-dumps/224922#224922">here</a>.
+2. Use your preferred BitTorrent client to download a, or part of a data dump.
+
+Note: Most BitTorrent clients allow you to pick and choose which files _within_ a Torrent that you
+wish to download. You will probably want to limit the files that you download, as some of them can be 
+quite large. Most of the sites are in individual 7z files. Except for stackoverflow.com which is broken
+up into a few seperate archives. If downloading stackoverflow.com, ensure you download the Posts, Users, and Comments files.
 
 ## Running StackedOff
 
@@ -96,27 +42,26 @@ up into a few seperate archives.  If downloading stackoverflow.com, ensure you d
 
 Launch a browser pointing at http://localhost and you should see the StackedOff GUI.
 
-(NOTE: Your browser must be ES6 compatible.  Please see the <a href="https://www.w3schools.com/js/js_es6.asp">table here for browser version compatibility</a>.)
+(NOTE: Your browser must be ES6 compatible. Please see the <a href="https://www.w3schools.com/js/js_es6.asp">table here for browser version compatibility</a>.)
 
 ### Configure index dir
 
-The first time that you run StackedOff you will be asked to specify an index directory.  This is where StackedOff
-will store it's indexes.  These indexes can get quite large if you are indexing large sites such as stackoverflow.com.
+The first time that you run StackedOff you will be asked to specify an index directory. This is where StackedOff will store it's indexes. These indexes can get quite large if you are indexing large sites such as stackoverflow.com.
 
-* Make sure you have enough disk space.  
+* Make sure you have enough disk space. 
 * It is preferable to use a local disk, as this will dramatically impact the speed of StackedOff.
-* It is preferable to use an SSD disk, as this will also impact the speed of StackedOff.
+* It is preferable to use an SSD, as this will also impact the speed of StackedOff.
 
 ### Load a site
 
 Assuming you have downloaded a Stack Exchange site:
 
 1. click on the 'Add Site' button.
-2. Enter the path that contains the 7z file(s) and Sites.xml file that you previously downloaded.  Click 'Next'
+2. Enter the path that contains the 7z file(s) and Sites.xml file that you previously downloaded. Click 'Next'
 3. Select the site(s) that you wish to index.
 4. Click 'Next'
 
-Indexing can take some time.  On my laptop (7th Gen i5, with SSD) indexing <a href="stackoverflow.com">stackoverflow.com</a> takes about 4 hours.
+Indexing can take some time. On my laptop (7th Gen i5, with SSD) indexing <a href="stackoverflow.com">stackoverflow.com</a> takes about 4 hours.
 
 ### Search
 
@@ -131,9 +76,40 @@ To change this, edit the file in your home directory .stackedoff/app.properties,
 
 Re-run StackedOff.
 
+## Building
+
+StackedOff can be built with JDK 8-21. To build it, run `./gradlew build` on a Unix-like system or `gradlew.bat build` on Windows. After the build is done, it is available in `./build/distributions/`.
+
+## Testing (Docker)
+
+StackedOff can also be built and ran via Docker. This is preferrable for testing since it's all one step, but not for production, as it does not produce distributable files.
+
+```bash
+docker-compose up -d --build
+```
+
+Go on `localhost:8080`
+
+Place your StackExchange archive files in the `import` directory and once on the web interface, enter `/import` as _Index directory_.
+
+## Serving (Docker)
+
+Docker can also be used to make your computer into a kind of local StackExchange server. The "production" build adds basic_auth on `/admin` (add index) and `/rest/purgeSite` (remove index) endpoints, so that accounts can be added.
+
+Create a user and password with :
+
+```bash
+touch ./nginx/.htpasswd
+htpasswd -m ./nginx/.htpasswd admin
+# A password will be asked for the "admin" user
+# You can add multiple accounts
+```
+
+> This may require an `apt-get install apache2-utils`
+
 # Acknowledgments
 
-The guys at <a href="https://stackexchange.com/">stackexchange.com</a>.  Who not only revolutionized the 
+The guys at <a href="https://stackexchange.com/">stackexchange.com</a>. Who not only revolutionized the 
 technical Q&A space, but also in the spirit of 'openness' admirably continue to allow free access to all of their
 Q&A data for all of their sites.
 

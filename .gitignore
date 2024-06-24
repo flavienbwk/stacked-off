@@ -12,3 +12,7 @@ import
 # Ignore nginx passwd file and logs
 nginx/.htpasswd
 nginx/logs/
+
+
+# Ignore some (probably useless) directory
+bin
